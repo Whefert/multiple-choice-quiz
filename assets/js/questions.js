@@ -4,30 +4,11 @@ const choices = document.querySelector("#choices");
 const feedback = document.querySelector("#feedback");
 const endScreen = document.querySelector("#end-screen");
 const start = document.querySelector("#start");
-const time = document.querySelector("#time");
-//30 seconds in milliseconds
-const allottedQuizTime = 30000;
-let quizEndTime,
-  correctAnswer = null;
+const finalScore = document.querySelector("#final-score");
+let score = 0;
+
+let correctAnswer = null;
 let currentQuestionIndex = 0;
-
-//get time to end quiz
-function startTimer() {
-  quizEndTime = new Date().getTime() + allottedQuizTime;
-  let timer = setInterval(function () {
-    const now = new Date().getTime();
-    const timeToEnd = quizEndTime - now;
-    let timeRemaining = Math.floor((timeToEnd % (1000 * 60)) / 1000);
-    time.textContent = timeRemaining;
-
-    if (timeRemaining == 0) {
-      clearInterval(timer);
-      showEndScreen();
-    }
-  }, 100);
-}
-
-let user = { name: "", score: "" };
 
 // TODO: COMMENT CODE LOGIC
 
@@ -41,7 +22,8 @@ const questionsArray = [
   },
   {
     question:
-      "Usain ran 9.58 seconds to break the 100 meter world record at the ___________.",
+      "Usain Bolt ran 9.58 seconds to break the 100 meter world record at the ___________.",
+    correctAnswer: 2,
     answers: [
       "2007 World Championships",
       "2008 Olympics",
@@ -51,18 +33,18 @@ const questionsArray = [
   },
   {
     question:
-      "Michael Norman Manley served as the ___________ Prime Minister of Jamaica from 1972 - 1980 and 1989 - 1992",
-    correctAnswer: 0,
-    answers: ["1st", "2nd", "3rd", "4th"],
+      "Michael Norman Manley served as the ___________ Prime Minister of Jamaica from 1972 - 1980 and 1989 - 1992.",
+    correctAnswer: 3,
+    answers: ["first", "second", "third", "fourth"],
   },
   {
-    question: "Jamaica's population is approximately ____________",
-    correctAnswer: 0,
+    question: "Jamaica's population is approximately ___________ people.",
+    correctAnswer: 1,
     answers: ["1.2 million", "2.8 million", "5.3 million", "9.2 million"],
   },
 ];
 
-//show questions and answers in DOM
+//show questions and answers on page
 function showQuestion() {
   questions.classList.remove("hide");
   resetDOM();
@@ -78,8 +60,19 @@ function showQuestion() {
   }
 }
 
-choices.addEventListener("click", function (event) {
+//show result div below the answer
+function showResult() {
   feedback.classList.remove("hide");
+  setInterval(function () {
+    feedback.classList.add("hide");
+    clearInterval();
+  }, 2000);
+}
+
+//check if the selection is the correct answer, display the result and
+// move on to the next question or the end screen if all quesruibs have been answered
+choices.addEventListener("click", function (event) {
+  showResult();
   if (event.target.getAttribute("data-answer") == currentAnswer) {
     feedback.textContent = "CORRECT";
     score++;
@@ -99,9 +92,11 @@ start.addEventListener("click", function (event) {
   startTimer();
 });
 
+//Hide
 function showEndScreen() {
   questions.classList.add("hide");
   endScreen.classList.remove("hide");
+  finalScore.textContent = `: ${score} / ${questionsArray.length}`;
 }
 
 function resetDOM() {
