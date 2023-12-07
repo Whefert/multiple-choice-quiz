@@ -3,26 +3,62 @@ const questionTitle = document.querySelector("#question-title");
 const choices = document.querySelector("#choices");
 const feedback = document.querySelector("#feedback");
 const endScreen = document.querySelector("#end-screen");
-let player = {name}
-
-let correctAnswer = null;
+const start = document.querySelector("#start");
+const time = document.querySelector("#time");
+//30 seconds in milliseconds
+const allottedQuizTime = 30000;
+let quizEndTime,
+  correctAnswer = null;
 let currentQuestionIndex = 0;
+
+//get time to end quiz
+function startTimer() {
+  quizEndTime = new Date().getTime() + allottedQuizTime;
+  let timer = setInterval(function () {
+    const now = new Date().getTime();
+    const timeToEnd = quizEndTime - now;
+    let timeRemaining = Math.floor((timeToEnd % (1000 * 60)) / 1000);
+    time.textContent = timeRemaining;
+
+    if (timeRemaining == 0) {
+      clearInterval(timer);
+      showEndScreen();
+    }
+  }, 100);
+}
+
+let user = { name: "", score: "" };
+
+// TODO: COMMENT CODE LOGIC
+
 //create array of questions
 const questionsArray = [
   {
-    question: "Question 1",
+    question:
+      "Bob Marley was born in the parish of ___________ to a Jamaican mother and British father.",
     correctAnswer: 0,
-    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+    answers: ["St. Ann", "Kingston", "Clarendon", "Westmoreland"],
   },
   {
-    question: "Question 2",
-    correctAnswer: 0,
-    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+    question:
+      "Usain ran 9.58 seconds to break the 100 meter world record at the ___________.",
+    answers: [
+      "2007 World Championships",
+      "2008 Olympics",
+      "2009 World Championships",
+      "2012 Olympics",
+    ],
   },
   {
-    question: "Question 3",
+    question:
+      "Michael Norman Manley served as the ___________ Prime Minister of Jamaica from 1972 - 1980 and 1989 - 1992",
     correctAnswer: 0,
-    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+    answers: ["1st", "2nd", "3rd", "4th"],
+  },
+  {
+    question: "Jamaica's population is approximately ____________",
+    correctAnswer: 0,
+    answers: ["1.2 million", "2.8 million", "5.3 million", "9.2 million"],
   },
 ];
 
@@ -37,7 +73,7 @@ function showQuestion() {
   for (let i = 0; i < answers.length; i++) {
     const answer = document.createElement("button");
     answer.setAttribute("data-answer", i);
-    answer.textContent = answers[i];
+    answer.textContent = `${i + 1}. ${answers[i]}`;
     choices.appendChild(answer);
   }
 }
@@ -58,6 +94,11 @@ choices.addEventListener("click", function (event) {
   }
 });
 
+start.addEventListener("click", function (event) {
+  showQuestion();
+  startTimer();
+});
+
 function showEndScreen() {
   questions.classList.add("hide");
   endScreen.classList.remove("hide");
@@ -72,6 +113,7 @@ function storeScore() {
   localStorage.setItem("score", scores);
 }
 
-function nextQuestion() {}
-
-showQuestion();
+function init() {
+  resetDOM;
+  user = { name: "", score: "" };
+}
