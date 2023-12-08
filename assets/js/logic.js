@@ -2,12 +2,12 @@ const time = document.querySelector("#time");
 const submit = document.querySelector("#submit");
 const submitAnchor = document.querySelector("#submit");
 const initials = document.querySelector("#initials");
-const userCount = 0;
 
 let user = { name: "", score: 0 };
 
 //30 seconds in milliseconds
 const allottedQuizTime = 30000;
+const incorrectAnswerTimeSubtraction = 5000;
 let quizEndTime;
 
 submitAnchor.addEventListener("click", function (event) {
@@ -26,17 +26,30 @@ initials.addEventListener("click", function () {
 });
 
 //get time to end quiz
-function startTimer() {
-  quizEndTime = new Date().getTime() + allottedQuizTime;
+function startTimer(isIncorrectAnswer) {
+  let timeRemaining;
+  if (quizEndTime > 0) {
+    //if quiz time has already been established and an incorrect answer is chosen, subtract 5 seconds from the quiz end time
+    if (isIncorrectAnswer) {
+      quizEndTime -= incorrectAnswerTimeSubtraction;
+    }
+  } else {
+    //get current time + the allotted time for the quiz
+    quizEndTime = new Date().getTime() + allottedQuizTime;
+  }
+
   let timer = setInterval(function () {
     const now = new Date().getTime();
-    const timeToEnd = quizEndTime - now;
-    let timeRemaining = Math.floor((timeToEnd % (1000 * 60)) / 1000);
-    time.textContent = timeRemaining;
 
-    if (timeRemaining == 0) {
+    if (quizEndTime <= now) {
+      timeRemaining = 0;
       clearInterval(timer);
       showEndScreen();
+      time.textContent = "0";
+    } else {
+      const timeToEnd = quizEndTime - now;
+      timeRemaining = Math.floor((timeToEnd % (1000 * 60)) / 1000);
+      time.textContent = timeRemaining;
     }
   }, 100);
 }

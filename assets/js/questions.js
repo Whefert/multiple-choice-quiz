@@ -7,9 +7,9 @@ const start = document.querySelector("#start");
 const finalScore = document.querySelector("#final-score");
 var correctTone = new Audio("assets/sfx/correct.wav");
 var incorrectTone = new Audio("assets/sfx/incorrect.wav");
-
+let timeToEnd;
 let score = 0;
-
+let incorrectCount = 0;
 let correctAnswer = null;
 let currentQuestionIndex = 0;
 
@@ -84,6 +84,8 @@ choices.addEventListener("click", function (event) {
     correctTone.play();
   } else {
     feedback.textContent = "INCORRECT";
+    incorrectCount++;
+    startTimer(true);
     incorrectTone.play();
   }
   if (currentQuestionIndex < questionsArray.length - 1) {
@@ -97,7 +99,7 @@ choices.addEventListener("click", function (event) {
 start.addEventListener("click", function (event) {
   init();
   showQuestion();
-  startTimer();
+  startTimer(false);
   endScreen.classList.add("hide");
 });
 
@@ -119,8 +121,10 @@ function storeScore() {
 function init() {
   resetDOM;
   score = 0;
+  incorrectCount = 0;
   correctAnswer = null;
   currentQuestionIndex = 0;
+  quizEndTime = 0;
   questions.classList.remove("hide");
   endScreen.classList.add("hide");
   user = { name: "", score: "" };
