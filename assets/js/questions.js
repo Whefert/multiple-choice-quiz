@@ -5,6 +5,10 @@ const feedback = document.querySelector("#feedback");
 const endScreen = document.querySelector("#end-screen");
 const start = document.querySelector("#start");
 const finalScore = document.querySelector("#final-score");
+
+var correctTone = new Audio("assets/sfx/correct.wav");
+var incorrectTone = new Audio("assets/sfx/incorrect.wav");
+
 let score = 0;
 
 let correctAnswer = null;
@@ -63,10 +67,10 @@ function showQuestion() {
 //show result div below the answer
 function showResult() {
   feedback.classList.remove("hide");
-  setInterval(function () {
+  x = setInterval(function () {
     feedback.classList.add("hide");
-    clearInterval();
-  }, 2000);
+    clearInterval(x);
+  }, 1000);
 }
 
 //check if the selection is the correct answer, display the result and
@@ -76,8 +80,10 @@ choices.addEventListener("click", function (event) {
   if (event.target.getAttribute("data-answer") == currentAnswer) {
     feedback.textContent = "CORRECT";
     score++;
+    correctTone.play();
   } else {
     feedback.textContent = "INCORRECT";
+    incorrectTone.play();
   }
   if (currentQuestionIndex < questionsArray.length - 1) {
     currentQuestionIndex++;
@@ -88,11 +94,11 @@ choices.addEventListener("click", function (event) {
 });
 
 start.addEventListener("click", function (event) {
+  init();
   showQuestion();
   startTimer();
 });
 
-//Hide
 function showEndScreen() {
   questions.classList.add("hide");
   endScreen.classList.remove("hide");
@@ -110,5 +116,10 @@ function storeScore() {
 
 function init() {
   resetDOM;
+  score = 0;
+  correctAnswer = null;
+  currentQuestionIndex = 0;
+  questions.classList.remove("hide");
+  endScreen.classList.add("hide");
   user = { name: "", score: "" };
 }
