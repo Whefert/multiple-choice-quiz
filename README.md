@@ -8,7 +8,7 @@ Here is the link to the deployed application: https://whefert.github.io/multiple
 
 See screenshot from the web application below:
 
-![Password Generator App Screenshot](https://github.com/Whefert/password-generator/blob/main/Password%20Generator%20Screenshot.png)
+![JavaScript Code Quiz App Screenshot](https://github.com/Whefert/multiple-choice-quiz/blob/main/assets/images/Code%20Quiz.gif)
 
 ## Acceptance Criteria
 
