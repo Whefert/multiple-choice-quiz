@@ -97,6 +97,7 @@ start.addEventListener("click", function (event) {
   init();
   showQuestion();
   startTimer();
+  endScreen.classList.add("hide");
 });
 
 function showEndScreen() {
