@@ -5,7 +5,6 @@ const feedback = document.querySelector("#feedback");
 const endScreen = document.querySelector("#end-screen");
 const start = document.querySelector("#start");
 const finalScore = document.querySelector("#final-score");
-
 var correctTone = new Audio("assets/sfx/correct.wav");
 var incorrectTone = new Audio("assets/sfx/incorrect.wav");
 
@@ -13,8 +12,6 @@ let score = 0;
 
 let correctAnswer = null;
 let currentQuestionIndex = 0;
-
-// TODO: COMMENT CODE LOGIC
 
 //create array of questions
 const questionsArray = [
