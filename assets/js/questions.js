@@ -16,32 +16,36 @@ let currentQuestionIndex = 0;
 //create array of questions
 const questionsArray = [
   {
-    question:
-      "Bob Marley was born in the parish of ___________ to a Jamaican mother and British father.",
-    correctAnswer: 0,
-    answers: ["St. Ann", "Kingston", "Clarendon", "Westmoreland"],
+    question: "The external JavaScript file must contain the <script> tag.",
+    correctAnswer: 1,
+    answers: ["True", "False"],
+  },
+  {
+    question: "Inside which HTML element do we put the JavaScript?",
+    correctAnswer: 1,
+    answers: ["<javascript>", "<script>", "<scripting>", "js"],
   },
   {
     question:
-      "Usain Bolt ran 9.58 seconds to break the 100 meter world record at the ___________.",
+      "What is the correct JavaScript syntax to change the content of the HTML element below? \n\n <p id='demo'>This is a demonstration.</p>",
     correctAnswer: 2,
     answers: [
-      "2007 World Championships",
-      "2008 Olympics",
-      "2009 World Championships",
-      "2012 Olympics",
+      "document.getElementByName('p').innerHTML = 'Hello World!'",
+      "#demo.innerHTML = 'Hello World!'",
+      "document.getElementById('demo').innerHTML = 'Hello World!'",
+      "document.getElement('p').innerHTML = 'Hello World!'",
     ],
   },
   {
     question:
-      "Michael Norman Manley served as the ___________ Prime Minister of Jamaica from 1972 - 1980 and 1989 - 1992.",
+      "What is the correct syntax for referring to an external script called 'xxx.js'?",
     correctAnswer: 3,
-    answers: ["first", "second", "third", "fourth"],
-  },
-  {
-    question: "Jamaica's population is approximately ___________ people.",
-    correctAnswer: 1,
-    answers: ["1.2 million", "2.8 million", "5.3 million", "9.2 million"],
+    answers: [
+      "<script href='xxx.js'>",
+      "<script name='xxx.js'>",
+      "<script link='xxx.js'>",
+      "<script src='xxx.js'>",
+    ],
   },
 ];
 
