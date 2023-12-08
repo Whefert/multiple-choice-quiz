@@ -1,4 +1,4 @@
-# Multile Choice Coding Quiz
+# Multiple Choice Coding Quiz
 
 ## Description
 
